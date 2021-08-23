@@ -1,4 +1,4 @@
-import { ReviewModel } from '../../../mongo/review/review.model';
+import { ReviewModel } from '../../../mongo';
 import service from 'feathers-mongoose';
 
 export const ReviewService = service({

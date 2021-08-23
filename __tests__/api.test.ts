@@ -30,7 +30,7 @@ describe('Testing Sick Flicks Web Services', () => {
     "username": "tester",
     "user_id": null,
   }
-  let testProfileId: string;
+  // let testProfileId: string;
 
   const testMovie = {
     "title": "test",
@@ -38,7 +38,7 @@ describe('Testing Sick Flicks Web Services', () => {
     "release": new Date(),
     "movie_db_id": "1234567"
   }
-  let testMovieId: string;
+  // let testMovieId: string;
 
   const testReview = {
     "title": "test review",
@@ -69,7 +69,7 @@ describe('Testing Sick Flicks Web Services', () => {
     expect(movie.release).toEqual(testMovie.release);
     expect(movie.image).toEqual(testMovie.image);
 
-    testMovieId = movie._id;
+    // testMovieId = movie._id;
     testReview.movie_id = movie._id;
   });
 
@@ -91,7 +91,7 @@ describe('Testing Sick Flicks Web Services', () => {
     expect(profile.username).toEqual(testUser.email);
     expect(profile.image).toEqual(null);
     testProfile.user_id = profile.user_id;
-    testProfileId = profile._id;
+    // testProfileId = profile._id;
     testReview.profile_id = profile._id;
   });
 

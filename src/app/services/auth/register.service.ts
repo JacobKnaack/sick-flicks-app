@@ -1,9 +1,7 @@
 import { ServiceMethods } from '@feathersjs/feathers';
 import { FeathersError } from '@feathersjs/errors';
 import { NotAllowed, BadRequest } from '../../middleware';
-import { UserModel } from '../../../mongo/user/user.model';
-import { ProfileModel } from '../../../mongo/profile/profile.model';
-import { IUser, User, Profile, ProfileRoles, IProfile } from '../../../mongo';
+import { ProfileModel, UserModel, IUser, User, Profile, ProfileRoles, IProfile } from '../../../mongo';
 
 export class RegisterService implements ServiceMethods<any> {
   async find(): Promise<FeathersError> {
