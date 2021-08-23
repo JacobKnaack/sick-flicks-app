@@ -39,7 +39,7 @@ const userSchema: Schema<IUser> = new Schema<IUser>({
 
 userSchema.virtual('token').get(
   function(this: IUser) {
-    let data: JwtPayload = { email: this.email };
+    const data: JwtPayload = { email: this.email };
     return jwt.sign(data, API_SECRET);
   }
 );
@@ -65,11 +65,11 @@ userSchema.statics.authenticateBasic = async function(email: string, password: s
 }
 
 userSchema.statics.authenticateBearer = async function(token: string): Promise<IUser> {
-  let payload: string | JwtPayload = jwt.verify(token, API_SECRET);
+  const payload: string | JwtPayload = jwt.verify(token, API_SECRET);
   if (!payload) throw new Error('Invalid Token');
   try {
     // cast the <any> type onto the payload vairble.
-    let validUser = await this.findOne({ email: (<any>payload).email });
+    const validUser = await this.findOne({ email: (<User>payload).email });
     return validUser;
   } catch (e) {
     console.error(e);

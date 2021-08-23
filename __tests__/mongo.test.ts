@@ -62,7 +62,6 @@ describe('testing the mongo interface', () => {
     profile_id: null,
     content: 'Test test',
   }
-  let testCommentId: string | null;
 
   it('should be able to create a User', async () => {
 
@@ -172,7 +171,6 @@ describe('testing the mongo interface', () => {
     expect(comment._id).toBeTruthy();
     expect(comment.content).toEqual(testComment.content);
     expect(comment.review_id).toEqual(testReviewId);
-    testCommentId = comment._id;
   });
 
   it('Should fetch a Review and include Comments', async () => {

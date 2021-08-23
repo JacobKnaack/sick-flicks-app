@@ -5,9 +5,12 @@ import { BadRequest } from '../';
 import base64 from 'base-64';
 
 const getUserFromAuthString = async (type: string, authString: string): Promise<IUser | Error> => {
+  let user: string;
+  let pass : string;
+
   switch(type.toLowerCase()) {
     case 'basic':
-      let [ user, pass ] = base64.decode(authString).split(':');
+      [ user, pass ] = base64.decode(authString).split(':');
       return await UserModel.authenticateBasic(user, pass);
     case 'bearer':
       return await UserModel.authenticateBearer(authString);
@@ -17,17 +20,17 @@ const getUserFromAuthString = async (type: string, authString: string): Promise<
 }
 
 export const authenticate = async (context: HookContext ): Promise<void> => {
-  let { headers } = context.params;
+  const { headers } = context.params;
   if (!headers) {
     context.statusCode = 400;
     context.error = new BadRequest('No Authorization Headers Found');
     return
   }
-  let authHeader = headers.authorization || headers.Authorization;
+  const authHeader = headers.authorization || headers.Authorization;
 
   try {
-    let [ type, string ] = authHeader.split(' ');
-    let user = await getUserFromAuthString(type, string);
+    const [ type, string ] = authHeader.split(' ');
+    const user = await getUserFromAuthString(type, string);
     context.data.user = user;
     return;
   } catch(e) {

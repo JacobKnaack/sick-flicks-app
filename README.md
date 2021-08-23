@@ -17,11 +17,34 @@ In order to retrieve data stored in within the Sick Flicks API, you must registe
 
 These routes can be used to retrieve data from the Sick Flicks Servers:
 
-### /login
+### Responses
 
-### /register
+All responses from each service are formatted as `JSON` objects.
 
-### /reviews
+* *Successful* responses will contain the data type requests from the service.
+* *Unsuccessful* responses will contain an `Error` object formatted as `JSON`.
+
+### Login Service
+
+Allows the User to Sign into the platform for `Authenticated` services.
+
+#### /login
+
+* Request:
+  * Method: `POST`
+  * path: `sickflicks:PORT/api/v1/login`
+  * required headers:
+    * Authorization
+      * `Basic <base64encodedUser:Pass>`
+* Response:
+  * StatusCodes:
+    * 405
+
+### Registration Service
+
+#### /register
+
+### Review Service
 
 ### /movies
 

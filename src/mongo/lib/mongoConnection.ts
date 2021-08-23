@@ -15,7 +15,7 @@ export async function startConnection(uri: string): Promise<void> {
   }
 }
 
-export async function stopConnection() {
+export async function stopConnection(): Promise<void> {
   try {
     await mongoose.disconnect();
     console.log('Mongoose Client disconnected');
@@ -37,6 +37,6 @@ export class MongoConnection {
     this.uri = mongodbURI;
   }
 
-  start = () => startConnection(this.uri);
+  start = (): Promise<void> => startConnection(this.uri);
   stop = stopConnection;
 }
