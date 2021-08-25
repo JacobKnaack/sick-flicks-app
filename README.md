@@ -1,5 +1,7 @@
 # Sick Flick API
 
+![continuous integration](https://github.com/JacobKnaack/sick-flicks-app/actions/workflows/ci.yml/badge.svg)
+
 ## Overview
 
 This Web Service is designed to Serve Client applications that are registered on the Sick Flicks Platform.
