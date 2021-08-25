@@ -1,10 +1,14 @@
+import dotenv from 'dotenv';
 import { sickFlickApp } from '../src/app';
 import { connection } from 'mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import { startConnection, stopConnection } from '../src/mongo/lib';
 import * as base64 from 'base-64';
+import jwt from 'jsonwebtoken';
 
+dotenv.config();
 let server: MongoMemoryServer;
+const API_SECRET: string = process.env.API_SECRET || 'SECRET_STRING_FOR_TESTING';
 
 beforeAll(async () => {
   server = await MongoMemoryServer.create();
@@ -38,7 +42,7 @@ describe('Testing Sick Flicks Web Services', () => {
     "release": new Date(),
     "movie_db_id": "1234567"
   }
-  // let testMovieId: string;
+  let testMovieId: string;
 
   const testReview = {
     "title": "test review",
@@ -69,7 +73,7 @@ describe('Testing Sick Flicks Web Services', () => {
     expect(movie.release).toEqual(testMovie.release);
     expect(movie.image).toEqual(testMovie.image);
 
-    // testMovieId = movie._id;
+    testMovieId = movie._id;
     testReview.movie_id = movie._id;
   });
 
@@ -118,5 +122,32 @@ describe('Testing Sick Flicks Web Services', () => {
     expect(review.title).toEqual(testReview.title);
     expect(review.html).toEqual(testReview.html);
   });
+
+  it('A User should be able to to create a review using a Bearer token', async () => {
+    const token = jwt.sign({ email: testUser.email}, API_SECRET);
+
+    const review = await sickFlickApp.api.service('reviews').create(testReview, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    expect(review._id).toBeTruthy();
+    expect(review.title).toEqual(testReview.title);
+  });
+
+  it('Movie service shuold be able to review Reviews associated with Movie', async () => {
+    const movie = await sickFlickApp.api.service('movies').get(testMovieId, { query: {
+      $populate: 'reviews'
+    }});
+
+    expect(movie).toBeDefined();
+    expect(movie.reviews).toBeDefined();
+    expect(movie.reviews.length).toBe(2);
+  });
+
+  // it('Review service should be able to return Comments', () => {
+
+  // });
 });
 

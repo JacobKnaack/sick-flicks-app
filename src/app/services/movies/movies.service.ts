@@ -1,4 +1,4 @@
-import { MovieModel } from '../../../mongo';
+import { MovieModel } from '@/mongo';
 import service from 'feathers-mongoose';
 
 export const MovieService = service({

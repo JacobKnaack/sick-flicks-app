@@ -68,11 +68,10 @@ userSchema.statics.authenticateBearer = async function(token: string): Promise<I
   const payload: string | JwtPayload = jwt.verify(token, API_SECRET);
   if (!payload) throw new Error('Invalid Token');
   try {
-    // cast the <any> type onto the payload vairble.
+    // cast the <User> type onto the payload vairble for type validation.
     const validUser = await this.findOne({ email: (<User>payload).email });
     return validUser;
   } catch (e) {
-    console.error(e);
     throw new Error('No User found');
   }
 }

@@ -1,4 +1,4 @@
-import { CommentModel } from '../../../mongo';
+import { CommentModel } from '@/mongo';
 import service from 'feathers-mongoose';
 
 console.log("comment service", CommentModel);

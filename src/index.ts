@@ -1,3 +1,4 @@
+import 'module-alias/register';
 import dotenv from 'dotenv';
 import { sickFlickApp } from './app';
 import { MongoConnection } from './mongo';

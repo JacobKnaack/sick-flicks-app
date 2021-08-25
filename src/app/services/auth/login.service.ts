@@ -1,7 +1,7 @@
 import { ServiceMethods, Params } from '@feathersjs/feathers';
 import { FeathersError } from '@feathersjs/errors';
-import { NotAllowed, BadRequest, NotFound  } from '../../middleware';
-import { ProfileModel, IProfile } from '../../../mongo';
+import { NotAllowed, BadRequest, NotFound  } from '@/app/middleware';
+import { ProfileModel, IProfile } from '@/mongo';
 
 export class LoginService implements ServiceMethods<any> {
   async find(): Promise<FeathersError> {

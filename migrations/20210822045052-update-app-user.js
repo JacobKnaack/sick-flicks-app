@@ -9,7 +9,7 @@ module.exports = {
     // See https://github.com/seppevs/migrate-mongo/#creating-a-new-migration-script
     const users = await db.collection.get('users').find({}).toArray();
     const operations = users.map(async user => {
-      let tempPass = await bcrypt.hash(process.env.API_SECRET, 10);
+      let tempPass = await bcrypt.hash(process.env.TEMP_PASSWORD, 10);
       return db.collection('users').updateOne({_id: user._id}, {
         $unset: {
           tokenSeed: null,

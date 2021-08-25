@@ -12,6 +12,7 @@
     "feathers-mongoose": "^8.3.3",
     "jsonwebtoken": "^8.5.1",
     "migrate-mongo": "^8.2.3",
+    "module-alias": "^2.2.2",
     "mongoose": "^5.13.7",
     "morgan": "^1.10.0"
   },
@@ -43,10 +44,15 @@
     "prestart": "npm run build",
     "start": "node build/index.js",
     "db:migrate": "migrate-mongo up",
-    "lint": "eslint . --ext .ts"
+    "check-types": "tsc --noemit",
+    "eslint": "eslint . --ext .ts",
+    "lint": "npm run eslint && npm run check-types"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "Web Service for Sick Flick Reviews"
+  "description": "Web Service for Sick Flick Reviews",
+  "_moduleAliases": {
+    "@": "build"
+  }
 }

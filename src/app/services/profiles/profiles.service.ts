@@ -1,4 +1,4 @@
-import { ProfileModel } from '../../../mongo';
+import { ProfileModel } from '@/mongo';
 import service from 'feathers-mongoose';
 
 export const ProfileService = service({
