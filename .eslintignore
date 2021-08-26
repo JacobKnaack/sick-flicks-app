@@ -2,3 +2,4 @@ node_modules/
 build/
 migrations/
 jest.config.js
+migrate-mongo-config.js

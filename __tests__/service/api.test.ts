@@ -1,27 +1,8 @@
-import dotenv from 'dotenv';
-import { sickFlickApp } from '../src/app';
-import { connection } from 'mongoose';
-import { MongoMemoryServer } from 'mongodb-memory-server';
-import { startConnection, stopConnection } from '../src/mongo/lib';
+import { sickFlickApp } from '../../src/app';
 import * as base64 from 'base-64';
 import jwt from 'jsonwebtoken';
 
-dotenv.config();
-let server: MongoMemoryServer;
 const API_SECRET: string = process.env.API_SECRET || 'SECRET_STRING_FOR_TESTING';
-
-beforeAll(async () => {
-  server = await MongoMemoryServer.create();
-  const uri: string = server.getUri();
-  await startConnection(uri);
-});
-afterAll(async () => {
-  if (connection.readyState === 1) {
-    await server.stop();
-  }
-  
-  await stopConnection();
-});
 
 describe('Testing Sick Flicks Web Services', () => {
 

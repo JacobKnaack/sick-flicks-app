@@ -7,7 +7,7 @@ const API_SECRET: string = process.env.API_SECRET || 'SECRET_STRING_FOR_TESTING'
 
 export type User = {
   email: string,
-  password: string
+  password: string,
 }
 
 export interface IUser extends Document {
@@ -74,6 +74,11 @@ userSchema.statics.authenticateBearer = async function(token: string): Promise<I
   } catch (e) {
     throw new Error('No User found');
   }
+}
+
+userSchema.methods.sanitize = function(this: IUser): User {
+  const data = this.toObject();
+  return data;
 }
 
 export default userSchema;

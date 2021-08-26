@@ -1,22 +1,4 @@
-import { UserModel, ProfileModel, MovieModel, ReviewModel, CommentModel } from '../src/mongo';
-import { connection } from 'mongoose';
-import { MongoMemoryServer } from 'mongodb-memory-server';
-import { startConnection, stopConnection } from '../src/mongo/lib'; 
-
-let server: MongoMemoryServer;
-
-beforeAll(async () => {
-  server = await MongoMemoryServer.create();
-  const uri: string = server.getUri();
-  await startConnection(uri);
-});
-afterAll(async () => {
-  if (connection.readyState === 1) {
-    await server.stop();
-  }
-  
-  await stopConnection();
-});
+import { UserModel, ProfileModel, MovieModel, ReviewModel, CommentModel } from '../../src/mongo';
 
 describe('testing the mongo interface', () => {
 

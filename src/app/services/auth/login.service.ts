@@ -5,12 +5,12 @@ import { ProfileModel, IProfile } from '@/mongo';
 
 export class LoginService implements ServiceMethods<any> {
   async find(): Promise<FeathersError> {
-    const error = new NotAllowed("Method not allowed");
+    const error = new NotAllowed("Method Not Allowed");
     return Promise.reject(error);
   }
 
   async get(): Promise<FeathersError> {
-    const error = new NotAllowed("Method not allowed");
+    const error = new NotAllowed("Method Not Allowed");
     return Promise.reject(error);
   }
 
@@ -33,17 +33,17 @@ export class LoginService implements ServiceMethods<any> {
   }
 
   async update(): Promise<FeathersError> {
-    const error = new NotAllowed("Method not allowed");
+    const error = new NotAllowed("Method Not Allowed");
     return Promise.reject(error);
   }
 
   async patch(): Promise<FeathersError> {
-    const error = new NotAllowed("Method not allowed");
+    const error = new NotAllowed("Method Not Allowed");
     return Promise.reject(error);
   }
 
   async remove(): Promise<FeathersError> {
-    const error = new NotAllowed("Method not allowed");
+    const error = new NotAllowed("Method Not Allowed");
     return Promise.reject(error);
   }
 }

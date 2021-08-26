@@ -1,5 +1,6 @@
 import { Schema, Document } from 'mongoose';
 import { IMovie, IComment } from '../';
+import { validateHtml } from './validateHtml';
 
 export interface IReview extends Document {
   _id: string,
@@ -22,7 +23,7 @@ const reviewSchema: Schema<IReview> = new Schema<IReview>({
   profile_id: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: 'Profile'
+    ref: 'profiles'
   },
   movie_id: {
     type: Schema.Types.ObjectId,
@@ -31,7 +32,7 @@ const reviewSchema: Schema<IReview> = new Schema<IReview>({
   },
   html: {
     type: String,
-    required: true,
+    required: validateHtml,
   },
   image: {
     type: String,
