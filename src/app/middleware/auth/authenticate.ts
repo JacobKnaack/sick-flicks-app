@@ -1,12 +1,13 @@
 import { HookContext } from '@feathersjs/feathers';
-import { UserModel } from '@/mongo/user/user.model';
-import { IUser } from '@/mongo';
-import { BadRequest } from '../';
+import { FeathersError } from '@feathersjs/errors';
+import { UserModel, IUser } from '@/mongo';
+import { BadRequest, NotAuthenticated } from '../';
 import base64 from 'base-64';
 
 const getUserFromAuthString = async (type: string, authString: string): Promise<IUser | Error> => {
   let user: string;
   let pass : string;
+  let error: FeathersError;
 
   switch(type.toLowerCase()) {
     case 'basic':
@@ -15,7 +16,8 @@ const getUserFromAuthString = async (type: string, authString: string): Promise<
     case 'bearer':
       return await UserModel.authenticateBearer(authString);
     default:
-      return new Error('User Validation Error');
+      error = new NotAuthenticated('No Authentication Method found');
+      return Promise.reject(error);
   }
 }
 
@@ -23,7 +25,7 @@ export const authenticate = async (context: HookContext ): Promise<void | Error>
   const { headers } = context.params;
   if (!headers) {
     context.statusCode = 400;
-    const error = new BadRequest('No Authorization Headers Found')
+    const error = new BadRequest('No Authorization Headers Found');
     context.error = error;
     return error;
   }
@@ -35,7 +37,7 @@ export const authenticate = async (context: HookContext ): Promise<void | Error>
     context.data.user = user;
     return;
   } catch(e) {
-    const error = new BadRequest('bearer auth error', e);
+    const error = new NotAuthenticated('Authentication Error', e);
     context.statusCode = 500;
     context.error = error;
     return error;

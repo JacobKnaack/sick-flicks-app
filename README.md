@@ -1,4 +1,4 @@
-# Sick Flick API
+# Sick Flicks Web Service
 
 ![continuous integration](https://github.com/JacobKnaack/sick-flicks-app/actions/workflows/ci.yml/badge.svg)
 

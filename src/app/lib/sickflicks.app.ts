@@ -1,12 +1,14 @@
 import feathers from '@feathersjs/feathers';
 import '@feathersjs/transport-commons';
-import express, { Application } from '@feathersjs/express';
+import morgan from 'morgan';
+import express, { Application, errorHandler } from '@feathersjs/express';
 
 import {
   MovieService,
   ReviewService,
   LoginService,
-  RegisterService
+  RegisterService,
+  CommentService,
 } from '../services';
 import { authenticate } from '../middleware';
 
@@ -15,28 +17,24 @@ export const api = express(feathers());
 
 api.use(express.json());
 api.use(express.urlencoded({ extended: true }));
+api.use(morgan('tiny'));
 
 api.configure(express.rest());
 api.use('/movies', MovieService);
 api.use('/reviews', ReviewService);
+api.use('/comments', CommentService);
 api.use('/register', new RegisterService());
 api.use('/login', new LoginService());
-api.hooks({
-  error(ctx) {
-    console.log(ctx);
-  }
-})
+api.use(errorHandler());
 
 api.service('login').hooks({
-  before: {
-    create: [authenticate]
-  }
+  before: { create: [authenticate] }
 });
-
 api.service('reviews').hooks({
-  before: {
-    create: [authenticate]
-  }
+  before: { create: [authenticate] }
+});
+api.service('comments').hooks({
+  before: { create: [authenticate] }
 });
 
 const app: Application = express(feathers()).use('/api/v1', api);

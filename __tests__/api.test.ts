@@ -34,7 +34,6 @@ describe('Testing Sick Flicks Web Services', () => {
     "username": "tester",
     "user_id": null,
   }
-  // let testProfileId: string;
 
   const testMovie = {
     "title": "test",
@@ -50,7 +49,12 @@ describe('Testing Sick Flicks Web Services', () => {
     "movie_id": null,
     "html": "<h2>There is a heading here</h2><p>There is some text here</p>"
   }
-  // let testReviewId: string;
+
+  const testComment = {
+    "review_id": null,
+    "profile_id": null,
+    "content": "Here is some content"
+  }
 
   it('Movie service should be registered', () => {
     const movieService = sickFlickApp.api.service('movies');
@@ -95,8 +99,8 @@ describe('Testing Sick Flicks Web Services', () => {
     expect(profile.username).toEqual(testUser.email);
     expect(profile.image).toEqual(null);
     testProfile.user_id = profile.user_id;
-    // testProfileId = profile._id;
     testReview.profile_id = profile._id;
+    testComment.profile_id = profile._id;
   });
 
   it ('A User should be able to sign into their profile', async () => {
@@ -121,6 +125,7 @@ describe('Testing Sick Flicks Web Services', () => {
 
     expect(review.title).toEqual(testReview.title);
     expect(review.html).toEqual(testReview.html);
+    testComment.review_id = review._id;
   });
 
   it('A User should be able to to create a review using a Bearer token', async () => {
@@ -137,17 +142,35 @@ describe('Testing Sick Flicks Web Services', () => {
   });
 
   it('Movie service shuold be able to review Reviews associated with Movie', async () => {
-    const movie = await sickFlickApp.api.service('movies').get(testMovieId, { query: {
-      $populate: 'reviews'
-    }});
+    const movie = await sickFlickApp.api.service('movies').get(testMovieId, {
+      query: { $populate: 'reviews'} 
+    });
 
     expect(movie).toBeDefined();
     expect(movie.reviews).toBeDefined();
     expect(movie.reviews.length).toBe(2);
   });
 
-  // it('Review service should be able to return Comments', () => {
+  it('A User should be able to create a comment', async () => {
+    const token = jwt.sign({ email: testUser.email}, API_SECRET);
+    const comment = await sickFlickApp.api.service('comments').create(testComment, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    });
 
-  // });
+    expect(comment).toBeDefined();
+    expect(comment.content).toEqual(testComment.content);
+  });
+
+  it('Reviews should bbe able to retrieve associated comments', async () => {
+    const reviews = await sickFlickApp.api.service('reviews').find({
+      query: {$populate: 'comments'}
+    });
+
+    expect(reviews).toBeDefined();
+    expect(reviews.total).toBe(2);
+    expect(reviews.data[0].comments).toBeDefined();
+  });
 });
 

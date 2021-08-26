@@ -5,12 +5,13 @@ import { ProfileModel, UserModel, IUser, User, Profile, ProfileRoles, IProfile }
 
 export class RegisterService implements ServiceMethods<any> {
   async find(): Promise<FeathersError> {
-    return new NotAllowed("Method not allowed");
+    const error = new NotAllowed("Method not allowed");
+    return Promise.reject(error);
   }
 
   async get(): Promise<FeathersError> {
-    console.log('GET');
-    return new NotAllowed("Method not allowed");
+    const error = new NotAllowed("Method not allowed");
+    return Promise.reject(error);
   }
 
   async create(data: User): Promise<IProfile | FeathersError> {
@@ -28,21 +29,24 @@ export class RegisterService implements ServiceMethods<any> {
 
       return profile;
     } catch(e) {
-
       console.error(e);
-      return new BadRequest('Registration Request Malformed');
+      const error = new BadRequest('Registration Request Malformed');
+      return Promise.reject(error);
     }
   }
 
   async update(): Promise<FeathersError> {
-    return new NotAllowed("Method not allowed");
+    const error = new NotAllowed("Method not allowed");
+    return Promise.reject(error);
   }
 
   async patch(): Promise<FeathersError> {
-    return new NotAllowed("Method not allowed");
+    const error = new NotAllowed("Method not allowed");
+    return Promise.reject(error);
   }
 
   async remove():  Promise<FeathersError> {
-    return new NotAllowed("Method not allowed");
+    const error = new NotAllowed("Method not allowed");
+    return Promise.reject(error);
   }
 }
