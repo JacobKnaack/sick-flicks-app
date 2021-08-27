@@ -7,5 +7,7 @@ module.exports = {
     "@/(.*)": "<rootDir>/src/$1",
   },
   setupFilesAfterEnv: ['<rootDir>/__tests__/setup.ts'],
-  coverageReporters: ['json-summary']
+  verbose: true,
+  collectCoverage: true,
+  coverageReporters: ["text", "json-summary", "lcov"]
 };
