@@ -24,3 +24,7 @@ jobs:
       - run: npm ci
       - run: npm run build --if-present
       - run: npm test
+      - name: Generating Coverage Badges
+        uses: actions/jest-badges-action@latest
+          with:
+            branches: main

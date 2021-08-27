@@ -15,7 +15,8 @@
     "migrate-mongo": "^8.2.3",
     "module-alias": "^2.2.2",
     "mongoose": "^5.13.7",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "uuid-apikey": "^1.5.3"
   },
   "devDependencies": {
     "@types/base-64": "^1.0.0",
@@ -40,7 +41,6 @@
   "main": "index.js",
   "scripts": {
     "test": "NODE_ENV=test jest --verbose --coverage",
-    "posttest": "jest-coverage-badges",
     "init": "tsc --init",
     "build": "tsc",
     "prestart": "npm run build",
