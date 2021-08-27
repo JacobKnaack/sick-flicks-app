@@ -26,6 +26,6 @@ jobs:
       - run: npm test
   
       - name: Generating Coverage Badges
-        uses: jpb06/jest-badges-action@latest
+        uses: jpb06/jest-badges-action@1.6.0
         with:
           branches: main
