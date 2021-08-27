@@ -1,56 +1,88 @@
 # Sick Flicks Web Service
 
 ![continuous integration](https://github.com/JacobKnaack/sick-flicks-app/actions/workflows/ci.yml/badge.svg)
-![code coverage](./coverage/badge-statements.svg)
+![code coverage](https://img.shields.io/codecov/c/github/JacobKnaack/sick-flicks-app?label=Code%20Coverage)
 
 ## Overview
 
-This Web Service is designed to Serve Client applications that are registered on the Sick Flicks Platform.
+This Web Service is designed to Serve Client Applications with a range of API features.  The services included in this app are designed to facilitate the delivery of Movie Review data to any client that is registered on Platform, and manage Profile Data for Users of the platform.
 
-### Behavior
+---
 
-* Register an application that can consume Reviews, and Comments Provided by the Sick Flicks API.
-* Fetch **Movie** and **Review** content that can be displayed client side.
+## Installation
+
+Once you have cloned the repository you should be able to install the application using the following scripts.
+
+1. Install the project:
+
+   ```bash
+   $ npm install 
+   ```
+
+1. Once dependencies are installed you should run tests to ensure all modules are working properly:
+
+   ```bash
+   $ npm test
+   ```
+
+1. To run the project you should be able to use the start script:
+
+   ```bash
+   $ npm start
+   ```
+
+---
+
+## Configuration
+
+Before you can properly run the application you will need to provide access to a running **Mongo DB** instance. You should configure an environment varible that provides the following information to the application:
+
+* `MONGODB_URI=mongodb://<YOUR_MONGO_DB_CONNECTION_STRING>`
+
+You can create a file titled: `.env` at the root of this project repo to provide these values to the application.
+
+---
 
 ## Authentication
 
-In order to retrieve data stored in within the Sick Flicks API, you must register an application with our platform.
+The Sick Flicks API requires that every client that wants to access application resources to `Register` their application with the platform. Once Registered, the client will be allowed to access data and give Users the ability to access their Profile Data and perform Role based authorized behaviors.
 
-## Routes
+### **API Keys**
 
-These routes can be used to retrieve data from the Sick Flicks Servers:
+Every Request to the platform requires an *API Key* to identify the Client Application accessing the Sick Flicks API.  Please see the Sick Flicks Client Services documentation for how to allows clients to access keys and manage applications.
 
-### Responses
+How do we obtain Application credentials?
 
-All responses from each service are formatted as `JSON` objects.
+### **Profile Authentication**
 
-* *Successful* responses will contain the data type requests from the service.
-* *Unsuccessful* responses will contain an `Error` object formatted as `JSON`.
+For specific services and service behaviors, the User will be required to `Register` and or `Log In` to the platform and to obtain or modify information belonging to a specific profile or user.
 
-### Login Service
+How do we Obtain Profile credentials?
 
-Allows the User to Sign into the platform for `Authenticated` services.
+---
 
-#### /login
+## Services
 
-* Request:
-  * Method: `POST`
-  * path: `sickflicks:PORT/api/v1/login`
-  * required headers:
-    * Authorization
-      * `Basic <base64encodedUser:Pass>`
-* Response:
-  * StatusCodes:
-    * 405
+This Application includes the following services:
 
-### Registration Service
+* ### Login
 
-#### /register
+    Allows users to exchange authentication credentials for Profile Data.  Once a User has a Profile, they are allowed to perform 1st class functionality like comment creation and participating in Platform curration with likes and dislikes.
 
-### Review Service
+* ### Register
 
-### /movies
+    In order to Login and access a variety of platform features, the `Register` service should be used to grant platform credentials to the client application.
 
-### /profile/:id
+    These service requires that the client application has obtained an **API Key**.
 
-### /comments/:reviewId
+* ### Movies
+
+    Movies are catalogued from the **MovieDB**.  The movie service allows clients to request information about a movie and any associated information from TMDB.  Certain movie service methods required **Profile Authentication**.
+
+* ### Reviews
+
+    The platform can query and manage **Review** data created by particular User Profiles.
+  
+* ### Comments
+
+    Comments can be created for a given **Review** and for a given **Profile**.
