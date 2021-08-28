@@ -1,7 +1,9 @@
 import { Schema, Document } from 'mongoose';
-import { IProfile } from '../profile/profile.schema';
 import bcrypt from 'bcrypt';
 import jwt, { JwtPayload } from 'jsonwebtoken';
+import { IProfile } from '../';
+import authenticateBasic from './user.authenticateBasic';
+import authenticateBearer from './user.authenticateBearer';
 
 const API_SECRET: string = process.env.API_SECRET || 'SECRET_STRING_FOR_TESTING';
 
@@ -52,29 +54,13 @@ userSchema.virtual('profile', {
 });
 
 userSchema.pre('save', async function(): Promise<void> {
-  if (this.isModified('password')) {
+  if (this.isModified('password')) { 
     this.password = await bcrypt.hash(this.password, 10);
   }
 });
 
-userSchema.statics.authenticateBasic = async function(email: string, password: string): Promise<IUser> {
-  const user: IUser = await this.findOne({email});
-  const valid: boolean = await bcrypt.compare(password, user.password);
-  if (valid) return user;
-  throw new Error('Invalid User');
-}
-
-userSchema.statics.authenticateBearer = async function(token: string): Promise<IUser> {
-  const payload: string | JwtPayload = jwt.verify(token, API_SECRET);
-  if (!payload) throw new Error('Invalid Token');
-  try {
-    // cast the <User> type onto the payload vairble for type validation.
-    const validUser = await this.findOne({ email: (<User>payload).email });
-    return validUser;
-  } catch (e) {
-    throw new Error('No User found');
-  }
-}
+userSchema.statics.authenticateBasic = authenticateBasic;
+userSchema.statics.authenticateBearer = authenticateBearer;
 
 userSchema.methods.sanitize = function(this: IUser): User {
   const data = this.toObject();

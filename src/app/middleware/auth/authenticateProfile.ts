@@ -21,7 +21,7 @@ const getUserFromAuthString = async (type: string, authString: string): Promise<
   }
 }
 
-export const authenticate = async (context: HookContext ): Promise<void | Error> => {
+export const authenticateProfile = async (context: HookContext ): Promise<void | Error> => {
   const { headers } = context.params;
   if (!headers) {
     context.statusCode = 400;

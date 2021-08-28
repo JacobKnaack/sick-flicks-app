@@ -40,6 +40,7 @@
   "main": "index.js",
   "scripts": {
     "test": "NODE_ENV=test jest",
+    "test:dev": "NODE_ENV=dev jest --watch",
     "init": "tsc --init",
     "build": "tsc",
     "prestart": "npm run build",

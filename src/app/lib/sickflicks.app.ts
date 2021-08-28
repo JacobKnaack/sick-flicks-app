@@ -10,7 +10,7 @@ import {
   RegisterService,
   CommentService,
 } from '../services';
-import { authenticate } from '../middleware';
+import { authenticateProfile } from '../middleware';
 
 // creates our express application configured for feathers services.
 export const api = express(feathers());
@@ -28,13 +28,13 @@ api.use('/login', new LoginService());
 api.use(errorHandler());
 
 api.service('login').hooks({
-  before: { create: [authenticate] }
+  before: { create: [authenticateProfile] }
 });
 api.service('reviews').hooks({
-  before: { create: [authenticate] }
+  before: { create: [authenticateProfile], patch: [authenticateProfile] }
 });
 api.service('comments').hooks({
-  before: { create: [authenticate] }
+  before: { create: [authenticateProfile], patch: [authenticateProfile], remove: [authenticateProfile]  }
 });
 
 const app: Application = express(feathers()).use('/api/v1', api);

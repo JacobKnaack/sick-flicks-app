@@ -84,7 +84,7 @@ describe('Testing Sick Flicks Web Services', () => {
     testComment.profile_id = profile._id;
   });
 
-  it ('A User should be able to sign into their profile', async () => {
+  it ('A User should be able to Log In to retrieve their Profile', async () => {
     const basicAuthString = base64.encode(`${testUser.email}:${testUser.password}`);
     const profile= await sickFlickApp.api.service('login').create({}, { 
       headers: { 
@@ -109,7 +109,7 @@ describe('Testing Sick Flicks Web Services', () => {
     testComment.review_id = review._id;
   });
 
-  it('A User should be able to to create a review using a Bearer token', async () => {
+  it('A User should be able to to create a review using a Token', async () => {
     const token = jwt.sign({ email: testUser.email}, API_SECRET);
 
     const review = await sickFlickApp.api.service('reviews').create(testReview, {
@@ -122,7 +122,7 @@ describe('Testing Sick Flicks Web Services', () => {
     expect(review.title).toEqual(testReview.title);
   });
 
-  it('Movie service shuold be able to review Reviews associated with Movie', async () => {
+  it('Movie service should be able to return associated Reviews', async () => {
     const movie = await sickFlickApp.api.service('movies').get(testMovieId, {
       query: { $populate: 'reviews'} 
     });
@@ -144,7 +144,7 @@ describe('Testing Sick Flicks Web Services', () => {
     expect(comment.content).toEqual(testComment.content);
   });
 
-  it('Reviews should bbe able to retrieve associated comments', async () => {
+  it('Reviews should be able to retrieve associated Comments', async () => {
     const reviews = await sickFlickApp.api.service('reviews').find({
       query: {$populate: 'comments'}
     });

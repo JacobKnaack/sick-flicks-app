@@ -5,6 +5,7 @@ export async function startConnection(uri: string): Promise<void> {
     await mongoose.connect(uri, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      useFindAndModify: false
     });
     console.log('Mongo Connection established at : ' + uri);
 
