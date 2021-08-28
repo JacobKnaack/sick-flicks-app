@@ -58,10 +58,15 @@ describe('Testing the Client App and Api Key Models', () => {
       }
     });
 
-    // it('API Key should be able to authenticate When Client ID and Key are presented', async () => {
-    //   const isValidClient = await ApiKeyModel.authenticateKey(testAppId, testKey);
+    it('API Key should be able to authenticate When Client ID and Key are presented', async () => {
+      const validClient = await ApiKeyModel.authenticateKey(testAppId, testKey);
 
-    //   expect(isValidClient).toBeTruthy();
-    // });
+      expect(validClient).toBeTruthy();
+    });
+    it('API key should return a false value if presenting the wrong key', async () => {
+      const invalidClient = await ApiKeyModel.authenticateKey(testAppId, 'not-the-key');
+
+      expect(invalidClient).not.toBeTruthy();
+    });
   });
 });
